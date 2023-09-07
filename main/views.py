@@ -8,17 +8,12 @@ import json
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
-from pyvirtualdisplay import Display
 import time
-
-display = Display(visible=0, size=(1920, 1080))
-display.start()
 
 # Create your views here.
 chrome_options = Options()
 chrome_options.add_argument('--headless')  # headless 모드 설정
 driver = webdriver.Chrome()
-
 
 @api_view(['GET'])
 def index(request):
