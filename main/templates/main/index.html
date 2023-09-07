@@ -16,7 +16,7 @@
       const stopBtn = document.querySelector('button[name="stop"]');
       let urlInputValue = "";
       function sendFetchRequest() {
-        fetch("http://localhost:8000/submit", {
+        fetch("http://ec2-43-201-149-60.ap-northeast-2.compute.amazonaws.com:8080/submit", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
