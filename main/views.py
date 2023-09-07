@@ -10,10 +10,11 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
 import time
 
+# ssh -i /Users/sohyunwoo/.ssh/delievery_deploy.pem ubuntu@ec2-43-201-149-60.ap-northeast-2.compute.amazonaws.com
 # Create your views here.
 chrome_options = Options()
 chrome_options.add_argument('--headless')  # headless 모드 설정
-driver = webdriver.Chrome()
+driver = webdriver.Chrome(options=chrome_options)
 
 @api_view(['GET'])
 def index(request):
