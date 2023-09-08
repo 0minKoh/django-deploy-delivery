@@ -18,6 +18,8 @@ from selenium.webdriver.chrome.options import Options
 import time
 
 # ssh -i /Users/sohyunwoo/.ssh/delievery_deploy.pem ubuntu@ec2-43-201-149-60.ap-northeast-2.compute.amazonaws.com
+# cd /srv/django-deploy-delivery
+
 # Create your views here.
 chrome_options = Options()
 chrome_options.add_argument('--headless')  # headless 모드 설정
