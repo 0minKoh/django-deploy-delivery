@@ -17,8 +17,19 @@ from selenium.webdriver.chrome.options import Options
 # from pyvirtualdisplay import Display
 import time
 
+## -- server
 # ssh -i /Users/sohyunwoo/.ssh/delievery_deploy.pem ubuntu@ec2-43-201-149-60.ap-northeast-2.compute.amazonaws.com
 # cd /srv/django-deploy-delivery
+
+# sudo systemctl daemon-reload
+# sudo systemctl restart uwsgi nginx
+## -- server
+
+## -- github ssh activate
+# eval "$(ssh-agent -s)"
+# ssh-add ~/.ssh/0minkoh-github-id/id_rsa
+## -- github ssh activate
+
 
 # Create your views here.
 chrome_options = Options()
@@ -35,11 +46,10 @@ def index(request):
 def getUrlAndShowState(request):
     if request.method == 'POST':
       # json 형식이 아닐 때 예외 처리
-      req_data = json.loads(json.dumps(request.data))
-      # try:
-      #   req_data = json.loads(request.body)
-      # except json.JSONDecodeError as e:
-      #   return Response({'error': 'Invalid JSON data'}, status=status.HTTP_400_BAD_REQUEST)
+      try:
+        req_data = json.loads(json.dumps(request.data))
+      except json.JSONDecodeError as e:
+        return Response({'error': 'Invalid JSON data'}, status=status.HTTP_400_BAD_REQUEST)
       
       x_forwared_for = request.META.get('HTTP_X_FORWARDED_FOR')
       if x_forwared_for:
@@ -62,7 +72,7 @@ def getUrlAndShowState(request):
           serializer.save()
         return Response(result)
       except Exception as e:
-        return Response({'error': f'DB erorr: {e}'})
+        return Response({'error': f'DB에 에러가 발생했습니다: {e}'})
 
 def main(url):
     isFinished = False
@@ -82,4 +92,4 @@ def main(url):
 
       return {'isDelievered': f'{isFinished}', 'deliveryState': f'{deliveryStateText}'}
     except Exception as e:
-      return {'msg': f'{e}'}
+      return {'msg': f'유효하지 않은 url입니다. url을 다시 확인하세요. \n system message: {e}'}
