@@ -14,7 +14,13 @@ SECRET_KEY = 'django-insecure-d1m_k65ys*n7_86h7&!chg!(z@cd4u#ywku-pjjzqg-4thh^32
 DEBUG = True
 
 CORS_ALLOW_ALL_ORIGINS = True
+# CSRF_TRUSTED_ORIGINS = ['http://127.0.0.1:8000']
 ALLOWED_HOSTS = ['ec2-43-201-149-60.ap-northeast-2.compute.amazonaws.com', '127.0.0.1']
+
+ADMINS = (
+    ('supaja', 'ejemadl61@supaja.com')
+)
+MANAGERS = ADMINS
 
 # Application definition
 INSTALLED_APPS = [

@@ -9,20 +9,23 @@
     <h1>테스트</h1>
     <input name="url" type="text" placeholder="url을 입력하세요." />
     <button name="submit">제출</button>
-    <button name="stop">중지</button>
     <script>
       const urlInput = document.querySelector('input[name="url"]');
       const submitBtn = document.querySelector('button[name="submit"]');
-      const stopBtn = document.querySelector('button[name="stop"]');
       let urlInputValue = "";
+
       function sendFetchRequest() {
-        fetch("http://ec2-43-201-149-60.ap-northeast-2.compute.amazonaws.com:8080/submit", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ url: urlInputValue }),
-        })
+        fetch(
+          "http://ec2-43-201-149-60.ap-northeast-2.compute.amazonaws.com/submit",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "X-CSRFToken": "{{csrf_token}}",
+            },
+            body: JSON.stringify({ slipno: urlInputValue }),
+          }
+        )
           .then((res) => {
             return res.json();
           })
@@ -38,14 +41,9 @@
       urlInput.addEventListener("change", (e) => {
         urlInputValue = e.target.value;
       });
-      {% comment %} https://trace.cjlogistics.com/web/detail.jsp?slipno=680280908493 {% endcomment %}
       submitBtn.addEventListener("click", () => {
-        intervalId = setInterval(sendFetchRequest, 1000)
+        sendFetchRequest();
       });
-      stopBtn.addEventListener("click", () => {
-        console.log('실행 종료!')
-        clearInterval(intervalId);
-      })
     </script>
   </body>
 </html>
