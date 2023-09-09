@@ -56,8 +56,12 @@ def getUrlAndShowState(request):
         ip = x_forwared_for.split(',')[0]
       else:
         ip = request.META.get('REMOTE_ADDR')
+      
+      if ip == '43.202.7.99':
+        urlPath = f"https://trace.cjlogistics.com/web/detail.jsp?slipno={req_data['slipno']}"        
+      else:
+        return Response({'error': 'Forbidden IP'}, status=status.HTTP_403_FORBIDDEN)
 
-      urlPath = f"https://trace.cjlogistics.com/web/detail.jsp?slipno={req_data['slipno']}"
       # 680349049175
       try:
         result = main(urlPath) # 680..75 => {...}
